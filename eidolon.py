@@ -93,7 +93,7 @@ def testFunction():
     # What are we running?
     #==============================================================================
     # PRECOOKED_EXAMPLE = DISCRETIZATION_ERROR  #// PICK ANY OF THE CONSTANTS ABOVE & DEFINE PARAMETERS BELOW
-    PRECOOKED_EXAMPLE = 1
+    PRECOOKED_EXAMPLE = 10
     # parameters
     REACH = 2.0 #// These are just starting values - adjust as you see fit (try factors of 2 from here for a start,
                 #// in some cases you need REALLY large changes before noticing a difference).

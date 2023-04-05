@@ -89,7 +89,7 @@ class DifferentialScaleSpace(object):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         if self.current == self.pic.numScaleLevels:
             raise StopIteration("Out of bounds! The number of scale levels is " + str(self.pic.numScaleLevels) + "!")
         else:
@@ -115,6 +115,9 @@ class ScaleSpace(DifferentialScaleSpace):
     """
     def __init__(self, picture):
         super(ScaleSpace, self).__init__(picture, 0, 0)
+
+    def __next__(self):
+        return super().__next__()
         
                 
 #==============================================================================
@@ -129,7 +132,7 @@ class RockBottomPlane(DifferentialScaleSpace):
     def __init__(self, picture):
         super(RockBottomPlane, self).__init__(picture, 0, 0)
 
-    def next(self):
+    def __next__(self):
         if self.current == 1:
             raise StopIteration("Out of bounds! Only 1 RockBottomPlane!")
         else:
@@ -153,7 +156,7 @@ class DOGScaleSpace(object):
         self.numScaleLevels = picture.numScaleLevels
         self.scaleStackGenerator = ScaleSpace(picture)
         self.current = 0        
-        self.first = self.scaleStackGenerator.next()
+        self.first = self.scaleStackGenerator.__next__()
        
     def __iter__(self):
         return self
@@ -165,7 +168,7 @@ class DOGScaleSpace(object):
             first = np.copy(self.first)
             self.current += 1
             if self.current < self.numScaleLevels:
-                self.second = self.scaleStackGenerator.next()
+                self.second = self.scaleStackGenerator.__next__()
                 self.first = self.second    
                 second = np.copy(self.second)
                 return first - second
@@ -194,17 +197,17 @@ class FiducialSecondOrder(object):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         if self.current == self.numScaleLevels:
             raise StopIteration("FiducialSecondOrder out of bounds! The number of scale levels is " + str(self.numScaleLevels) + "!")
         else:
             self.current += 1
-            fiducialSecondOrderPScaleSpace = self.hessianXX.next()
+            fiducialSecondOrderPScaleSpace = self.hessianXX. __next__()
             # Here I transform from the Hessian matrix representation to a nice
             # isotropic basis of three line finders at 60 degrees orientation differences.
             # The coefficients are easy enough to find with a little algebra. 
-            tmp1 = fiducialSecondOrderPScaleSpace * (1.0/8) + self.hessianYY.next() * (3.0/8)
-            tmp2 = self.hessianXY.next() * (-np.sqrt(3)/4.0)
+            tmp1 = fiducialSecondOrderPScaleSpace * (1.0/8) + self.hessianYY. __next__() * (3.0/8)
+            tmp2 = self.hessianXY. __next__() * (-np.sqrt(3)/4.0)
                        
             # fiducialSecondOrderPScaleSpace = hessianXX #// these are the simple cell ("line finder") activities
             fiducialSecondOrderQScaleSpace = tmp1 + tmp2 #// the basis consists of three line finders at 120 degrees orientation increments
@@ -232,12 +235,12 @@ class FiducialLaplacian(object):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         if self.current == self.numScaleLevels:
             raise StopIteration("FiducialLaplacian out of bounds! The number of scale levels is " + str(self.numScaleLevels) + "!")
         else:               
             self.current += 1           
-            return self.hessianXX.next() + self.hessianYY.next() 
+            return self.hessianXX. __next__() + self.hessianYY. __next__()
 
 
 
@@ -269,14 +272,14 @@ def testFunction():
 #==============================================================================
     scaleStackGenerator = ScaleSpace(pic)
 #    for i in range(numScaleLevels):
-#        x = scaleStackGenerator.next()
+#        x = scaleStackGenerator. __next__()
 #        Image.fromarray(x.astype('uint8'), 'L').show()
    
 #==============================================================================
 # test RockBottomPlane
 #==============================================================================
     rockBottomPlaneGenerator = RockBottomPlane(pic)
-#    x = rockBottomPlaneGenerator.next()
+#    x = rockBottomPlaneGenerator. __next__()
 #    Image.fromarray(x.astype('uint8'), 'L').show()
         
 #==============================================================================
@@ -284,7 +287,7 @@ def testFunction():
 #==============================================================================
     DOGScaleStackGenerator = DOGScaleSpace(pic)
 #    for i in range(numScaleLevels):
-#        ds = DOGScaleStackGenerator.next()
+#        ds = DOGScaleStackGenerator. __next__()
 ##        Image.fromarray(ds.astype('uint8'), 'L').show()
 #        p += ds
 
@@ -293,7 +296,7 @@ def testFunction():
 #==============================================================================
     fiducialSecondOrderGenerator = FiducialSecondOrder(pic)
 #    for i in range(numScaleLevels):    
-#        P, Q, R = fiducialSecondOrderGenerator.next()
+#        P, Q, R = fiducialSecondOrderGenerator. __next__()
 #        Image.fromarray(P.astype('uint8'), 'L').show()
 #        Image.fromarray(Q.astype('uint8'), 'L').show()
 #        Image.fromarray(R.astype('uint8'), 'L').show()
@@ -304,7 +307,7 @@ def testFunction():
 #==============================================================================
     fiducialLaplacianGenerator = FiducialLaplacian(pic)
     for i in range(numScaleLevels):    
-        x = fiducialLaplacianGenerator.next()
+        x = fiducialLaplacianGenerator. __next__()
 #        print i, "\n", x
         p += x
 #        Image.fromarray(x.astype('uint8'), 'L').show()
@@ -315,10 +318,10 @@ def testFunction():
     fiducialFirstOrderXScaleSpace = DifferentialScaleSpace(pic,1,0)
     fiducialFirstOrderYScaleSpace = DifferentialScaleSpace(pic,0,1)
 #    for i in range(numScaleLevels):    
-#        x = fiducialFirstOrderXScaleSpace.next()
+#        x = fiducialFirstOrderXScaleSpace. __next__()
 #        p += x
 #        Image.fromarray(x.astype('uint8'), 'L').show()
-#        y = fiducialFirstOrderYScaleSpace.next()
+#        y = fiducialFirstOrderYScaleSpace. __next__()
 #        Image.fromarray(y.astype('uint8'), 'L').show()
 #        p += y
 

@@ -74,7 +74,7 @@ def SynthesisFromDOGActivity(pic):
     eidolonDataPlane = np.zeros(pic.fatFiducialDataPlane.shape)
     #// here the eidolon is constructed
     for i in range(pic.numScaleLevels):
-        eidolonDataPlane += fiducialDOGScaleSpace.next() # this is a generator!
+        eidolonDataPlane += fiducialDOGScaleSpace. __next__() # this is a generator!
     eidolon = pic.DisembedDataPlane(eidolonDataPlane) #// convert dataplane to image
     
     print("--- %s seconds ---" % ( time.perf_counter() - start_time))
@@ -105,7 +105,7 @@ def SynthesisFromLaplacian(pic, INTEGRATION_FUDGE_FACTOR):
     #// C. CONSTRUCT THE EIDOLON
     eidolonDataPlane = np.zeros(pic.fatFiducialDataPlane.shape)
     #// here the eidolon is constructed
-    eidolonDataPlane = rockBottomPlaneGenerator.next() + StackIntegrate(fiducialLaplacianScaleSpace, numScaleLevels, scaleLevels, picSize) * INTEGRATION_FUDGE_FACTOR
+    eidolonDataPlane = rockBottomPlaneGenerator. __next__() + StackIntegrate(fiducialLaplacianScaleSpace, numScaleLevels, scaleLevels, picSize) * INTEGRATION_FUDGE_FACTOR
     
     eidolon = pic.DisembedDataPlane(eidolonDataPlane) #// convert dataplane to image
     
@@ -149,7 +149,7 @@ def SynthesisFromSimpleCellActivity(pic, INTEGRATION_FUDGE_FACTOR):
     for il in integratedList:
         eidolonDataPlane += il
 
-    eidolonDataPlane = rockBottomPlaneGenerator.next() + eidolonDataPlane * INTEGRATION_FUDGE_FACTOR * THREE_FOURTH
+    eidolonDataPlane = rockBottomPlaneGenerator. __next__() + eidolonDataPlane * INTEGRATION_FUDGE_FACTOR * THREE_FOURTH
  
     eidolon = pic.DisembedDataPlane(eidolonDataPlane) #// convert dataplane to image
     
@@ -349,7 +349,7 @@ def OrientedEdgeDisarray(pic, reach, INTEGRATION_FUDGE_FACTOR):
                                 scaleLevels, 
                                 picSize)
 
-    eidolonDataPlane = rockBottomPlaneGenerator.next() + (planeP + planeQ + planeR) * THREE_FOURTH * INTEGRATION_FUDGE_FACTOR
+    eidolonDataPlane = rockBottomPlaneGenerator. __next__() + (planeP + planeQ + planeR) * THREE_FOURTH * INTEGRATION_FUDGE_FACTOR
                
     eidolon = pic.DisembedDataPlane(eidolonDataPlane) #// convert dataplane to image
     
@@ -381,7 +381,7 @@ def DisplayScalespaceLevel(pic, theLevel):
   
     i = 0
     while i <= theLevel:
-        eidolonDataPlane = fiducialScaleSpace.next()
+        eidolonDataPlane = fiducialScaleSpace. __next__()
         i += 1
  
     eidolon = pic.DisembedDataPlane(eidolonDataPlane) #// convert dataplane to image
@@ -420,7 +420,7 @@ def DisplayFractalNoise(pic, theLevel):
 
     i = 0
     while i <= theLevel:
-        eidolonDataPlane = coherentRandomGaussianDataStack.next()
+        eidolonDataPlane = coherentRandomGaussianDataStack. __next__()
         i += 1
         
     eidolon = DataToImage(pic.DisembedDataPlane(eidolonDataPlane, clip=False)) #// convert dataplane to image
@@ -522,8 +522,8 @@ def DisplayGradientDirection(pic, theLevel):
   
     i = 0
     while i <= theLevel:
-        gx = fiducialFirstOrderXScaleSpace.next()
-        gy = fiducialFirstOrderYScaleSpace.next()
+        gx = fiducialFirstOrderXScaleSpace. __next__()
+        gy = fiducialFirstOrderYScaleSpace. __next__()
         i += 1
 
     eidolonDataPlane = gx / np.sqrt(gx**2 + gy**2)
@@ -597,8 +597,8 @@ def GradientField(pic, theLevel):
 
     i = 0
     while i <= theLevel:
-        gx = fiducialFirstOrderXScaleSpace.next()
-        gy = fiducialFirstOrderYScaleSpace.next()
+        gx = fiducialFirstOrderXScaleSpace. __next__()
+        gy = fiducialFirstOrderYScaleSpace. __next__()
         i += 1  
 
     eidolonDataPlane = VectorImage(gx, gy)
@@ -636,7 +636,7 @@ def LineFinderField(pic, theLevel):
   
     i = 0
     while i <= theLevel:
-        fiducialSecondOrderPScaleSpace, fiducialSecondOrderQScaleSpace, fiducialSecondOrderRScaleSpace = fiducialSecondOrder.next()
+        fiducialSecondOrderPScaleSpace, fiducialSecondOrderQScaleSpace, fiducialSecondOrderRScaleSpace = fiducialSecondOrder. __next__()
         i += 1    
 
     eidolonDataPlane = LineFinderBasisImage(fiducialSecondOrderPScaleSpace, fiducialSecondOrderQScaleSpace, fiducialSecondOrderRScaleSpace)

@@ -110,7 +110,7 @@ class IncoherentGaussianDataStack(DataStack):
         super(IncoherentGaussianDataStack, self).__init__(numScaleLevels, w, h)
         self.sigma = sigma
         
-    def next(self):
+    def __next__(self):
         if self.current == self.numScaleLevels:
             raise StopIteration("Out of bounds! The number of scale levels is " + str(self.numScaleLevels) + "!")
         else:
@@ -131,7 +131,7 @@ class IncoherentScaledGaussianDataStack(DataStack):
         self.MAX_SIGMA = MAX_SIGMA
         self.scaleLevels = scaleLevels
 
-    def next(self):
+    def __next__(self):
         if self.current == self.numScaleLevels:
             raise StopIteration("Out of bounds! The number of scale levels is " + str(self.numScaleLevels) + "!")
         else:
@@ -150,7 +150,7 @@ class CoherentRandomGaussianDataStack(DataStack):
     This is a data stack generator, generates an Coherent Random Gaussian Data Stack.
     What this does is that it returns the sum of an Incoherent Scaled Gaussian Data 
     Stack (which consists of a stack of Scaled Blurred Random Gaussian Data Planes)
-    as first element, the next element is that sum minus the first matrix in the 
+    as first element, the next element is that sum minus the first matrix in the
     Incoherent Scaled Gaussian Data Stack, and so on.
     So it returns:
         element 0 = listOfDataPlanes[0] + listOfDataPlanes[1] + ... + listOfDataPlanes[n-1] + listOfDataPlanes[n]
@@ -175,7 +175,7 @@ class CoherentRandomGaussianDataStack(DataStack):
         # reverse list because we'll pop the elements off 
         self.listOfDataPlanes.reverse()
        
-    def next(self):
+    def __next__(self):
         if self.current == self.numScaleLevels:
             raise StopIteration("Out of bounds! The number of scale levels is " + str(self.numScaleLevels) + "!")
         else:
@@ -204,12 +204,12 @@ class PartiallyCoherentScaledGaussianDataStack(DataStack):
         self.incoh = IncoherentGaussianDataStack(numScaleLevels, w, h, sigma)
         self.coh = CoherentRandomGaussianDataStack(numScaleLevels, w, h, MAX_SIGMA, scaleLevels)
        
-    def next(self):
+    def __next__(self):
         if self.current == self.numScaleLevels:
             raise StopIteration("Out of bounds! The number of scale levels is " + str(self.numScaleLevels) + "!")
         else:
             self.current += 1
-            return self.incoh.next() * self.degree + self.coh.next()          
+            return self.incoh.  __next__() * self.degree + self.coh.  __next__()
 
 
 
