@@ -95,9 +95,9 @@ def testFunction():
     # PRECOOKED_EXAMPLE = DISCRETIZATION_ERROR  #// PICK ANY OF THE CONSTANTS ABOVE & DEFINE PARAMETERS BELOW
     PRECOOKED_EXAMPLE = 2
     # parameters
-    REACH = 2.0 #// These are just starting values - adjust as you see fit (try factors of 2 from here for a start,
+    REACH = 0.3 #// These are just starting values - adjust as you see fit (try factors of 2 from here for a start,
                 #// in some cases you need REALLY large changes before noticing a difference).
-    GRAIN = 0.9  #// Not all of these parameters are necessarily relevant for a given method (see above).
+    GRAIN = 1  #// Not all of these parameters are necessarily relevant for a given method (see above).
     LEVEL = 6  #// These numbers are not of any essence:
     FRACTION = 0.90  #// Once you get the hang of it, you won't need the precooked stuff anyway!    
     INCOHERENCE = 0.10  #// It is imperative to obtain an intuitive feel for the effects of these parameters (and their interactions) though.
