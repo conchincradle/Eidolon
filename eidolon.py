@@ -68,7 +68,7 @@ DISPLAY_FRACTAL_NOISE_PLANE = 22  #// displays a fractal noise plane (one Cartes
 # 
 #==============================================================================
 def testFunction(): 
-    SZ = 256
+    SZ = 512
     MIN_SIGMA = 1/sqrt(2) #// 1f/sqrt(2f)
     MAX_SIGMA = SZ/4.0
     SIGMA_FACTOR = sqrt(2)  #// sqrt(2f)
@@ -82,7 +82,7 @@ def testFunction():
 #    pic = Picture('Baby_face.jpg', SZ, MIN_SIGMA, MAX_SIGMA, SIGMA_FACTOR)
 #    pic = Picture('berries.jpg', SZ, MIN_SIGMA, MAX_SIGMA, SIGMA_FACTOR)
 #    pic = Picture('DenisHopper.jpg', SZ, MIN_SIGMA, MAX_SIGMA, SIGMA_FACTOR)
-    pic = Picture('1.png', SZ, MIN_SIGMA, MAX_SIGMA, SIGMA_FACTOR)
+    pic = Picture('imgs/512_animal.png', SZ, MIN_SIGMA, MAX_SIGMA, SIGMA_FACTOR)
 #    pic = Picture('Hanna_Salience.jpg', SZ, MIN_SIGMA, MAX_SIGMA, SIGMA_FACTOR)
 #    pic = Picture('Mona_Lisa.jpg', SZ, MIN_SIGMA, MAX_SIGMA, SIGMA_FACTOR)
 
@@ -93,11 +93,11 @@ def testFunction():
     # What are we running?
     #==============================================================================
     # PRECOOKED_EXAMPLE = DISCRETIZATION_ERROR  #// PICK ANY OF THE CONSTANTS ABOVE & DEFINE PARAMETERS BELOW
-    PRECOOKED_EXAMPLE = 10
+    PRECOOKED_EXAMPLE = 2
     # parameters
     REACH = 2.0 #// These are just starting values - adjust as you see fit (try factors of 2 from here for a start,
                 #// in some cases you need REALLY large changes before noticing a difference).
-    GRAIN = 8.0  #// Not all of these parameters are necessarily relevant for a given method (see above).
+    GRAIN = 0.9  #// Not all of these parameters are necessarily relevant for a given method (see above).
     LEVEL = 6  #// These numbers are not of any essence:
     FRACTION = 0.90  #// Once you get the hang of it, you won't need the precooked stuff anyway!    
     INCOHERENCE = 0.10  #// It is imperative to obtain an intuitive feel for the effects of these parameters (and their interactions) though.
@@ -154,7 +154,7 @@ def testFunction():
         im = pic.resizedOriginalImage # just show the original image resized if no valid choices are made
     
     # show the calculated image
-    im.show()
+    im.save("1.png")
     
 #==============================================================================
 # main

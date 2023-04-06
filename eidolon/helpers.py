@@ -69,14 +69,14 @@ def QuartilesAndPercentLevels(data, theLevel = 0.5):
         
     tmp = np.sort(data.reshape(data.size))
     q = {
-            'q0.01' : tmp[np.round(0.01*tmp.size)],
-            'q0.05' : tmp[np.round(0.05*tmp.size)],
-            'q0.25' : tmp[np.round(0.25*tmp.size)],
-            'q0.50' : tmp[np.round(0.50*tmp.size)],
-            'q0.75' : tmp[np.round(0.75*tmp.size)],
-            'q0.95' : tmp[np.round(0.95*tmp.size)],
-            'q0.99' : tmp[np.round(0.93*tmp.size)],
-            'qLevel' : tmp[np.round(theLevel*tmp.size)]
+            'q0.01' : tmp[int(np.round(0.01*tmp.size))],
+            'q0.05' : tmp[int(np.round(0.05*tmp.size))],
+            'q0.25' : tmp[int(np.round(0.25*tmp.size))],
+            'q0.50' : tmp[int(np.round(0.50*tmp.size))],
+            'q0.75' : tmp[int(np.round(0.75*tmp.size))],
+            'q0.95' : tmp[int(np.round(0.95*tmp.size))],
+            'q0.99' : tmp[int(np.round(0.93*tmp.size))],
+            'qLevel' : tmp[int(np.round(theLevel*tmp.size))]
         }
     return q
 
