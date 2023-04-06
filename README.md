@@ -1,5 +1,7 @@
 # Eidolon
 
+- I fixed some bugs and it can be run in Python 3 environment.
+
 This software was written in Python 2.7.6 (32 bit) on a Windows 7 machine.<br/>
 It relies heavily on NumPy, version 1.8.1, and on PILLOW (PIL), version 1.1.7.
 
